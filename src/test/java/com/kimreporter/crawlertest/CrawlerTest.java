@@ -24,7 +24,12 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kimreporter.domain.AdaptationVO;
 import com.kimreporter.domaintest.AdaptationDAOTest;
 import com.kimreporter.persistence.AdaptationDAO;
@@ -34,6 +39,14 @@ public class CrawlerTest {
 	
 	public boolean containsName(final List<AdaptationVO> list, final String new_id){
 	    return list.stream().filter(o -> o.getAdaptation_id().equals(new_id)).findFirst().isPresent();
+	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public void test(@RequestBody JSONObject request) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode obj = mapper.readTree(request.toString());
+		String index = obj.at("/action/parameters/index/value").asText();
+		logger.info(index);
 	}
 	
 	@Inject 

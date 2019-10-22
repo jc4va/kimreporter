@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script type="text/javascript">self.location = "/adaptation/listAll";
+<script type="text/javascript">self.location = "/adaptation/w/listAll";
 
 </script>
 

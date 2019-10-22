@@ -37,7 +37,7 @@ $(document).ready(function() {
 	console.log(formObj);
 
 	$(".btn-warning").on("click", function() {
-		formObj.attr("action", "/adaptation/modify");
+		formObj.attr("action", "/adaptation/w/modify");
 		formObj.attr("method", "get");
 		formObj.submit();
 	});

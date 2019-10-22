@@ -8,7 +8,7 @@
 	<title>Update</title>
 </head>
 <body>
-<form action="/adaptation/modify" role="form" method="post">
+<form action="/adaptation/w/modify" role="form" method="post">
 	<div class="form-group">
 		<label for="adaptation_id"> Adaptation ID </label> <input type="text" 
 		name="adaptation_id" id="adaptation_id" class="form-control" value="${adaptationVO.adaptation_id}"

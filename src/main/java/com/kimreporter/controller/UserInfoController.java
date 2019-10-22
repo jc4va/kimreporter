@@ -60,7 +60,7 @@ public class UserInfoController {
 		if (vo != null && passMatch) {
 			logger.info("LOGIN SUCCESS");
 			session.setAttribute(LOGIN, vo);
-			response.sendRedirect("/adaptation/listAll");
+			response.sendRedirect("/adaptation/w/listAll");
 		}
 		
 		else if (vo == null || !passMatch) {

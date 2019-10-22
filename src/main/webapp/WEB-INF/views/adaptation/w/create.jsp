@@ -8,7 +8,7 @@
 </head>
 <body>
 <script type="text/javascript">
-self.location = "/adaptation/listAll";
+self.location = "/adaptation/w/listAll";
 </script>
 </body>
 </html>

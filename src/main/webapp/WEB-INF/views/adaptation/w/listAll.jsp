@@ -18,7 +18,7 @@
 
 <c:forEach items="${list}" var="AdaptationVO">
 <tr>
-	<td><a href="/adaptation/read?adaptation_id=${AdaptationVO.adaptation_id}"> ${AdaptationVO.article_title}</td>
+	<td><a href="/adaptation/w/read?adaptation_id=${AdaptationVO.adaptation_id}"> ${AdaptationVO.article_title}</td>
 	<td>${AdaptationVO.adaptation_id}</td>
 	<td>${AdaptationVO.adaptation_content}</td>
 	<td>${AdaptationVO.user_id}</td>

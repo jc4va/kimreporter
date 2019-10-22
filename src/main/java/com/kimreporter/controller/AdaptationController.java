@@ -3,23 +3,28 @@ package com.kimreporter.controller;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kimreporter.domain.AdaptationVO;
 import com.kimreporter.domain.UserInfoVO;
 import com.kimreporter.service.AdaptationService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +40,7 @@ public class AdaptationController {
 	@Inject
 	private AdaptationService service;
 	
-	@RequestMapping(value = "/create", method = RequestMethod.GET) 
+	@RequestMapping(value = "/w/create", method = RequestMethod.GET) 
 	public void createGET(AdaptationVO adaptation, Model model) throws Exception {
 		logger.info("Adaptation Create GET");
 		service.regist(adaptation);
@@ -43,34 +48,34 @@ public class AdaptationController {
 		logger.info("CRAWLING STARTED");
 	}
 	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	@RequestMapping(value = "/w/read", method = RequestMethod.GET)
 	public void read(@RequestParam("adaptation_id") String adaptation_id, Model model) throws Exception{
 		logger.info("Read GET");
 		model.addAttribute(service.read(adaptation_id));
 	}
 	
-	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	@RequestMapping(value = "/w/listAll", method = RequestMethod.GET)
 	public void listAll(Model model) throws Exception {
 		logger.info("List of All Adaptations GET");
 		model.addAttribute("list", service.listAll());
 		logger.info(service.listAll().toString());
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/w/delete", method = RequestMethod.POST)
 	public String delete(@RequestParam("adaptation_id") String adaptation_id, RedirectAttributes rttr) throws Exception {
 		logger.info("Delete GET");
 		service.delete(adaptation_id);
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/adaptation/listAll";
+		return "redirect:/adaptation/w/listAll";
 	}
 	
-	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	@RequestMapping(value = "/w/modify", method = RequestMethod.GET)
 	public void modify(String adaptation_id, Model model) throws Exception{
 		logger.info("Modify GET");
 		model.addAttribute(service.read(adaptation_id));
 	}
 	
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	@RequestMapping(value = "/w/modify", method = RequestMethod.POST)
 	public String modifyPOST(AdaptationVO adaptation, RedirectAttributes rttr) throws Exception {
 		logger.info("Modify POST");
 		
@@ -78,15 +83,15 @@ public class AdaptationController {
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		
-		return "redirect:/adaptation/listAll";
+		return "redirect:/adaptation/w/listAll";
 	}
 	
 	// NUGU PLAY와 연결하는 부분 
-	
-	@RequestMapping(value = "/s_n_default", method = RequestMethod.GET)
-	public JSONObject listAllDefault(Model model) throws Exception {
+	@RequestMapping(value = "/p/s_n_default", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject listAllDefault(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
-		model.addAttribute("list", service.listAll());
+
 		List<AdaptationVO > all_list = service.listAll();
 		for (int i = 1; i < 6; i++) {
 	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
@@ -96,10 +101,10 @@ public class AdaptationController {
 	    return response_json;
 	}
 	
-	@RequestMapping(value = "/s_n_next1", method = RequestMethod.GET)
-	public JSONObject listAllNext1(Model model) throws Exception {
+	@RequestMapping(value = "/p/s_n_next1", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject listAllNext1(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
-		model.addAttribute("list", service.listAll());
 		List<AdaptationVO > all_list = service.listAll();
 		for (int i = 6; i < 11; i++) {
 	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
@@ -109,10 +114,10 @@ public class AdaptationController {
 	    return response_json;
 	}
 	
-	@RequestMapping(value = "/s_n_next2", method = RequestMethod.GET)
-	public JSONObject listAllNext2(Model model) throws Exception {
+	@RequestMapping(value = "/p/s_n_next2", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject listAllNext2(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
-		model.addAttribute("list", service.listAll());
 		List<AdaptationVO > all_list = service.listAll();
 		for (int i = 11; i < 16; i++) {
 	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
@@ -122,12 +127,12 @@ public class AdaptationController {
 	    return response_json;
 	}
 	
-	@RequestMapping(value = "/s_n_next3", method = RequestMethod.GET)
-	public JSONObject listAllNext3(Model model) throws Exception {
+	@RequestMapping(value = "/p/s_n_next3", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject listAllNext3(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
-		model.addAttribute("list", service.listAll());
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = 16; i < 21; i++) {
+		for (int i = 16; i < all_list.size(); i++) {
 	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
 	    }
 	    JSONObject response_json = JSONBuilder(output);
@@ -135,12 +140,29 @@ public class AdaptationController {
 	    return response_json;
 	}
 	
-	@RequestMapping(value = "/s_n_num", method = RequestMethod.GET)
-	public JSONObject readByNum(Model model) throws Exception {
+	@RequestMapping(value = "/p/s_n_numSingle", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject readByNumSingle(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
-		model.addAttribute("list", service.listAll());
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode obj = mapper.readTree(request.toString());
+		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = 16; i < 21; i++) {
+		output.put("news" + String.valueOf(index), String.valueOf(index) + "번. " + all_list.get(index).getAdaptation_content());
+	    JSONObject response_json = JSONBuilder(output);
+		logger.info(response_json.toString());
+	    return response_json;
+	}
+	
+	@RequestMapping(value = "/p/s_n_numFrom", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject readByNumFrom(@RequestBody JSONObject request) throws Exception {
+		JSONObject output = new JSONObject();
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode obj = mapper.readTree(request.toString());
+		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
+		List<AdaptationVO > all_list = service.listAll();
+		for (int i = index; i < index+5; i++) {
 	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
 	    }
 	    JSONObject response_json = JSONBuilder(output);

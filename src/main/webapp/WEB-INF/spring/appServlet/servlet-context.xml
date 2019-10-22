@@ -25,12 +25,12 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-
-    <beans:bean id="AuthInterceptor" class="com.kimreporter.interceptor.AuthInterceptor"></beans:bean>
+	
+	<beans:bean id="AuthInterceptor" class="com.kimreporter.interceptor.AuthInterceptor"></beans:bean>
     
     <interceptors>
         <interceptor>
-            <mapping path="/adaptation/*"/>
+            <mapping path="/adaptation/w/*"/>
             <beans:ref bean="AuthInterceptor"/>
         </interceptor>
     </interceptors>
