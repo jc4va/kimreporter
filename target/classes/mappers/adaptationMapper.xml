@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.kimreporter.mapper.AdaptationMapper">
+
+<insert id="create">
+	insert ignore into tbl_adaptation (article_title, article_content, adaptation_id, adaptation_content, ranking)
+	values(#{article_title}, #{article_content}, #{adaptation_id}, #{article_content}, #{ranking})
+</insert>
+
+<select id="read" resultType="com.kimreporter.domain.AdaptationVO">
+	select adaptation_id, user_id, adaptation_content, article_title, article_content
+	from tbl_adaptation
+	where adaptation_id=#{adaptation_id}
+</select>
+
+<update id="update">
+	update tbl_adaptation set adaptation_content=#{adaptation_content}
+	where adaptation_id=#{adaptation_id}
+</update>
+
+<delete id="delete">
+	delete from tbl_adaptation where adaptation_id = #{adaptation_id}
+</delete>
+
+<select id="listAll" resultType="com.kimreporter.domain.AdaptationVO">
+	<![CDATA[
+	select adaptation_id, user_id, adaptation_content, article_title, article_content, ranking, inserted_time
+	from tbl_adaptation
+	where DATE(inserted_time) = DATE(CURRENT_TIMESTAMP)
+	order by ranking asc
+	LIMIT 20
+	]]>
+</select>
+
+<update id="updateRanking">
+	update tbl_adaptation set ranking=#{ranking}
+	where adaptation_id=#{adaptation_id}
+</update>
+
+</mapper>
