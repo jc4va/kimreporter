@@ -93,8 +93,8 @@ public class AdaptationController {
 		JSONObject output = new JSONObject();
 
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = 1; i < 6; i++) {
-	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
+		for (int i = 0; i < 5; i++) {
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i).getAdaptation_content());
 	    }
 	    JSONObject response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
@@ -106,8 +106,8 @@ public class AdaptationController {
 	public JSONObject listAllNext1(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = 6; i < 11; i++) {
-	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
+		for (int i = 0; i < 5; i++) {
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i+5).getAdaptation_content());
 	    }
 	    JSONObject response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
@@ -119,8 +119,8 @@ public class AdaptationController {
 	public JSONObject listAllNext2(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = 11; i < 16; i++) {
-	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
+		for (int i = 0; i < 5; i++) {
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i+10).getAdaptation_content());
 	    }
 	    JSONObject response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
@@ -132,8 +132,8 @@ public class AdaptationController {
 	public JSONObject listAllNext3(@RequestBody JSONObject request) throws Exception {
 		JSONObject output = new JSONObject();
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = 16; i < all_list.size(); i++) {
-	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
+		for (int i = 0; i < 5; i++) {
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i+15).getAdaptation_content());
 	    }
 	    JSONObject response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
@@ -148,7 +148,7 @@ public class AdaptationController {
 		JsonNode obj = mapper.readTree(request.toString());
 		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
 		List<AdaptationVO > all_list = service.listAll();
-		output.put("news" + String.valueOf(index), String.valueOf(index) + "번. " + all_list.get(index).getAdaptation_content());
+		output.put("news" + String.valueOf(index), String.valueOf(index) + "번. " + all_list.get(index - 1).getAdaptation_content());
 	    JSONObject response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
 	    return response_json;
@@ -162,8 +162,9 @@ public class AdaptationController {
 		JsonNode obj = mapper.readTree(request.toString());
 		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
 		List<AdaptationVO > all_list = service.listAll();
-		for (int i = index; i < index+5; i++) {
-	    	output.put("news" + String.valueOf(i), String.valueOf(i) + "번. " + all_list.get(i).getAdaptation_content());
+		for (int i = 0; i < 5; i++) {
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(index).getAdaptation_content());
+	    	index = index + 1;
 	    }
 	    JSONObject response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
