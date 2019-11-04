@@ -33,7 +33,9 @@ public class AdaptationServiceImpl implements AdaptationService{
 			Elements links = doc.getElementsByClass("tit_thumb").select("a[href]");
 			Elements rankings = doc.select("ul.list_news2").select("span.screen_out");
 			// 링크 id (맨 뒤에 17숫자)를 찾아서 저장  
-			for (int i=0; i < 50; i++) {
+			int article_counter = 0;
+			int i = 0;
+			while(article_counter < 20) {
 				ArrayList<String> news_links = new ArrayList<String>();
 				String link = links.get(i).attr("abs:href").toString();
 				String rank = rankings.get(i).text();
@@ -44,6 +46,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 					
 				}
 				else {
+					article_counter++;
 					Elements news_title = opened_link.getElementsByClass("tit_view").select("h3");
 					news_links.add(parsed_link);
 					news_links.add(rank);
@@ -51,10 +54,14 @@ public class AdaptationServiceImpl implements AdaptationService{
 					news_links.add(summary.text());
 					summarized_news.add(news_links);
 				}
+				i++;
 			}
 			
 			// create(AdaptationVO vo, String title, String content, String id, int ranking)
-			// 저장 해 놓은 결과를 데이터베이스에 저장 
+			
+			// 1: saved: 1 new: 5
+			// 2: saved: null new: 1
+			// 3: saved: 1 new: null
 			
 			for (ArrayList<String> arr:summarized_news) {
 				
@@ -67,36 +74,16 @@ public class AdaptationServiceImpl implements AdaptationService{
 					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
 				}
 			}
-			/*
 			
-			for (ArrayList<String> arr:summarized_news) {
-				
-				AdaptationVO vo = dao.read(arr.get(0)); // 크롤링한 기사 하나하나의 id로 이미 db에 저장되어있는 adaptation을 불러온다 
-				
-				if (vo != null  && Integer.valueOf(arr.get(1)) != vo.getRanking()) {
-					vo.setRanking(Integer.valueOf(arr.get(1)));
+			for (AdaptationVO vo:all_list) {
+				for (ArrayList<String> arr:summarized_news) {
+					if (vo.getAdaptation_id() == arr.get(0)) {
+						vo.setRanking(Integer.valueOf(arr.get(1)));
+					}
 				}
-				
-				else if (vo == null) {
-					vo.setRanking(-1);
-				}
-				
-				else {
-					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
-				}
-				----
-				
-				if (vo != null) {
-					vo.setRanking(Integer.valueOf(arr.get(1)));
-					dao.update(vo);
-				} else {
-					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
-				}
-				
-				*/
-			// loop through summarized_news and today_list
-			// if vo in today_list not in summarized_news -> set ranking to minus
-			// if vo in today_list -> update ranking 
+			}
+			
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();

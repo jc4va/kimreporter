@@ -37,7 +37,7 @@
 			    <form action="/adaptation/w/modify?adaptation_id=${AdaptationVO.adaptation_id}" role="form" method="post">
 			    	<textarea class=form-control name="adaptation_content" rows=5
 			    	id="adaptation_content">${AdaptationVO.adaptation_content}</textarea>
-			    	<button class="btn btn-primary" type="submit"> 제출 </button>
+			    	<button class="btn btn-primary" type="submit" > 제출 </button>
 			    </form>
 			    </div>
 			</div>

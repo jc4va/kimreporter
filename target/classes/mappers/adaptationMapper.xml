@@ -29,7 +29,7 @@
 	<![CDATA[
 	select adaptation_id, user_id, adaptation_content, article_title, article_content, ranking, inserted_time
 	from TBL_ADAPTATION
-	where ranking > 0
+	where ranking > 0 AND DATE(inserted_time) = DATE(CURRENT_TIMESTAMP)
 	order by ranking asc
 	LIMIT 20
 	]]>

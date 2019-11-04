@@ -37,18 +37,6 @@ import com.kimreporter.service.AdaptationService;
 
 public class CrawlerTest {
 	
-	public boolean containsName(final List<AdaptationVO> list, final String new_id){
-	    return list.stream().filter(o -> o.getAdaptation_id().equals(new_id)).findFirst().isPresent();
-	}
-	
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public void test(@RequestBody JSONObject request) throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode obj = mapper.readTree(request.toString());
-		String index = obj.at("/action/parameters/index/value").asText();
-		logger.info(index);
-	}
-	
 	@Inject 
 	private AdaptationDAO dao;
 	
@@ -58,8 +46,38 @@ public class CrawlerTest {
 	private static Logger logger = LoggerFactory.getLogger(CrawlerTest.class);
 	
 	@Test
-	public void JsonTest() throws Exception {
-		logger.info(Arrays.toString(service.listAll().toArray()));
+	public void CrawlTest() throws Exception {
+		String url = "https://media.daum.net/ranking/popular/";
+		String news_url = "https://news.v.daum.net/v/";
+		ArrayList<ArrayList<String> > summarized_news = new ArrayList<ArrayList<String> >();
+		Document doc = Jsoup.connect(url).get();
+		Elements links = doc.getElementsByClass("tit_thumb").select("a[href]");
+		Elements rankings = doc.select("ul.list_news2").select("span.screen_out");
+		// 링크 id (맨 뒤에 17숫자)를 찾아서 저장  
+		int article_counter = 0;
+		int i = 0;
+		while(article_counter < 20) {
+			ArrayList<String> news_links = new ArrayList<String>();
+			String link = links.get(i).attr("abs:href").toString();
+			String rank = rankings.get(i).text();
+			String parsed_link = link.substring(link.lastIndexOf("/") + 1);
+			Document opened_link = Jsoup.connect(news_url+ parsed_link).get();
+			Elements summary = opened_link.getElementsByClass("layer_util layer_summary").select("p");
+			if (summary.text().isEmpty()) {
+					
+			}
+			else {
+				article_counter++;
+				Elements news_title = opened_link.getElementsByClass("tit_view").select("h3");
+				news_links.add(parsed_link);
+				news_links.add(rank);
+				news_links.add(news_title.text());
+				news_links.add(summary.text());
+				summarized_news.add(news_links);
+			}
+			i++;
+		}
+		logger.info(Arrays.toString(summarized_news.toArray()));
 	}
 
 }
