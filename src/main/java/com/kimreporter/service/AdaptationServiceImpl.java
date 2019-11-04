@@ -21,8 +21,6 @@ import com.kimreporter.persistence.AdaptationDAO;
 @Service
 public class AdaptationServiceImpl implements AdaptationService{
 	
-	private static final Logger logger = LoggerFactory.getLogger(AdaptationServiceImpl.class);
-	
 	@Inject 
 	private AdaptationDAO dao;
 
@@ -64,27 +62,29 @@ public class AdaptationServiceImpl implements AdaptationService{
 				i++;
 			}
 			
+			for (ArrayList<String> arr:summarized_news) {
+				
+				String idx = arr.get(0);
+				AdaptationVO vo = dao.read(idx);
+				
+				if (vo != null) {
+					vo.setRanking(Integer.valueOf(arr.get(1)));
+					dao.updateRanking(vo);
+				} else {
+					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
+				}
+			}
+			
 			for (AdaptationVO vo:all_list) {
-				if (Arrays.asList(links_array).contains(vo.getAdaptation_id()) == false) {
+				if (links_array.contains(vo.getAdaptation_id()) == false) {
 					vo.setRanking(-1);
-					dao.update(vo);
+					dao.updateRanking(vo);
 				}
 			}
 			// create(AdaptationVO vo, String title, String content, String id, int ranking)
 			
 			// 가져온 뉴스가 데이터베이스에 이미 저장되어 있을경우 
 			/*
-			for (ArrayList<String> arr:summarized_news) {
-				
-				AdaptationVO vo = dao.read(arr.get(0));
-				
-				if (vo != null) {
-					vo.setRanking(Integer.valueOf(arr.get(1)));
-					dao.update(vo);
-				} else {
-					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
-				}
-			}
 			
 			*/
 			

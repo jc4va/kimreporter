@@ -11,13 +11,20 @@
 </insert>
 
 <select id="read" resultType="com.kimreporter.domain.AdaptationVO">
-	select adaptation_id, user_id, adaptation_content, article_title, article_content
+	<![CDATA[
+	select *
 	from TBL_ADAPTATION
 	where adaptation_id=#{adaptation_id}
+	]]>
 </select>
 
 <update id="update">
 	update TBL_ADAPTATION set adaptation_content=#{adaptation_content}
+	where adaptation_id=#{adaptation_id}
+</update>
+
+<update id="updateRanking">
+	update TBL_ADAPTATION set ranking=#{ranking}
 	where adaptation_id=#{adaptation_id}
 </update>
 
@@ -27,17 +34,12 @@
 
 <select id="listAll" resultType="com.kimreporter.domain.AdaptationVO">
 	<![CDATA[
-	select adaptation_id, user_id, adaptation_content, article_title, article_content, ranking, inserted_time
+	select *
 	from TBL_ADAPTATION
 	where ranking > 0 AND DATE(inserted_time) = DATE(CURRENT_TIMESTAMP)
 	order by ranking asc
 	LIMIT 20
 	]]>
 </select>
-
-<update id="updateRanking">
-	update TBL_ADAPTATION set ranking=#{ranking}
-	where adaptation_id=#{adaptation_id}
-</update>
 
 </mapper>

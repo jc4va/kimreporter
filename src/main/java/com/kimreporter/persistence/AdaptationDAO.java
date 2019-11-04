@@ -12,7 +12,7 @@ public interface AdaptationDAO {
 	
 	public void update(AdaptationVO vo) throws Exception;
 	
-	public void updateRanking(AdaptationVO vo, int ranking) throws Exception;
+	public void updateRanking(AdaptationVO vo) throws Exception;
 	
 	public void delete(String adaptation_id) throws Exception;
 	

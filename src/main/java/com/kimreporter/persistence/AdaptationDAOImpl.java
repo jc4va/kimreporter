@@ -50,10 +50,8 @@ public class AdaptationDAOImpl implements AdaptationDAO{
 	}
 
 	@Override
-	public void updateRanking(AdaptationVO vo, int ranking) throws Exception {
-		vo.setRanking(ranking);
-		session.update(namespace+".updateRanking", vo);
-		
+	public void updateRanking(AdaptationVO vo) throws Exception {
+		session.update(namespace+ ".updateRanking", vo);
 	}
 
 }
