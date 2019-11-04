@@ -1,10 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: com.kimreporter.crawlertest.CrawlerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.19 sec <<< FAILURE!
-JsonTest(com.kimreporter.crawlertest.CrawlerTest)  Time elapsed: 0.007 sec  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.265 sec <<< FAILURE!
+JsonTest(com.kimreporter.crawlertest.CrawlerTest)  Time elapsed: 0.01 sec  <<< ERROR!
 java.lang.NullPointerException
-	at com.kimreporter.crawlertest.CrawlerTest.JsonTest(CrawlerTest.java:49)
+	at com.kimreporter.crawlertest.CrawlerTest.JsonTest(CrawlerTest.java:62)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

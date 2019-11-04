@@ -29,8 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-// Adaptation: Service 단에서 크롤링 한 이후로 modify구문이 작동하지 않음. 
-
 @Controller
 @RequestMapping("/adaptation/*")
 public class AdaptationController {
@@ -39,21 +37,21 @@ public class AdaptationController {
 	
 	@Inject
 	private AdaptationService service;
+	private JSONObject output = new JSONObject();
+	private JSONObject response_json = new JSONObject();
+	private ObjectMapper mapper = new ObjectMapper();
+
+
+	// 웹에서 보여지는 부분 
 	
-	@RequestMapping(value = "/w/create", method = RequestMethod.GET) 
-	public void createGET(AdaptationVO adaptation, Model model) throws Exception {
-		logger.info("Adaptation Create GET");
-		service.regist(adaptation);
-		model.addAttribute("msg", "SUCCESS");
-		logger.info("CRAWLING STARTED");
-	}
-	
+	// 번안 정보 조회 
 	@RequestMapping(value = "/w/read", method = RequestMethod.GET)
 	public void read(@RequestParam("adaptation_id") String adaptation_id, Model model) throws Exception{
 		logger.info("Read GET");
 		model.addAttribute(service.read(adaptation_id));
 	}
 	
+	// 전체 번안 가져오기 
 	@RequestMapping(value = "/w/listAll", method = RequestMethod.GET)
 	public void listAll(Model model) throws Exception {
 		logger.info("List of All Adaptations GET");
@@ -61,6 +59,7 @@ public class AdaptationController {
 		logger.info(service.listAll().toString());
 	}
 	
+	// 번안 삭제 
 	@RequestMapping(value = "/w/delete", method = RequestMethod.POST)
 	public String delete(@RequestParam("adaptation_id") String adaptation_id, RedirectAttributes rttr) throws Exception {
 		logger.info("Delete GET");
@@ -69,12 +68,14 @@ public class AdaptationController {
 		return "redirect:/adaptation/w/listAll";
 	}
 	
+	// 번안 수정 GET
 	@RequestMapping(value = "/w/modify", method = RequestMethod.GET)
 	public void modify(String adaptation_id, Model model) throws Exception{
 		logger.info("Modify GET");
 		model.addAttribute(service.read(adaptation_id));
 	}
 	
+	// 번안 수정 POST
 	@RequestMapping(value = "/w/modify", method = RequestMethod.POST)
 	public String modifyPOST(AdaptationVO adaptation, RedirectAttributes rttr) throws Exception {
 		logger.info("Modify POST");
@@ -87,87 +88,189 @@ public class AdaptationController {
 	}
 	
 	// NUGU PLAY와 연결하는 부분 
+	
+	// 크롤링 시작 
+	@RequestMapping(value = "/p/create", method = RequestMethod.GET) 
+	public void createGET(AdaptationVO adaptation, Model model) throws Exception {
+		service.regist(adaptation);
+		model.addAttribute("msg", "SUCCESS");
+		logger.info("CRAWLING STARTED");
+	}
+	
+	// 발화 시작 
+	@RequestMapping(value = "/p/summarizeNews", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject summarizeNews(@RequestBody JSONObject request) throws Exception {
+		
+		logger.info("SUMMARIZE NEWS");
+		
+		// 리스폰스 JSON에 디폴트 결과값만을 담아서 보냄 
+		response_json = JSONBuilder(output);
+		return response_json;
+	}
+	
+	// 처음 다섯개 뉴스 가져옴 
 	@RequestMapping(value = "/p/s_n_default", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject listAllDefault(@RequestBody JSONObject request) throws Exception {
-		JSONObject output = new JSONObject();
+		
+		logger.info("S_N_DEFAULT");
 
+		// 리스트 정보 가져오기
 		List<AdaptationVO > all_list = service.listAll();
+		
+		// 포문 돌아가면서 리스폰스 결과 추가 
 		for (int i = 0; i < 5; i++) {
 	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i).getAdaptation_content());
 	    }
-	    JSONObject response_json = JSONBuilder(output);
+		
+		// 리스폰스 JSON 빌드
+	    response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
 	    return response_json;
 	}
 	
+	// 다음 다섯개 뉴스 가져옴 
 	@RequestMapping(value = "/p/s_n_next1", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject listAllNext1(@RequestBody JSONObject request) throws Exception {
-		JSONObject output = new JSONObject();
+		
+		logger.info("S_N_NEXT1");
+		
+		// 리스트 정보 가져오기
 		List<AdaptationVO > all_list = service.listAll();
+		
+		// 포문 돌아가면서 리스폰스 결과 추가 
 		for (int i = 0; i < 5; i++) {
-	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i+5).getAdaptation_content());
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+6) + "번. " + all_list.get(i+5).getAdaptation_content());
 	    }
-	    JSONObject response_json = JSONBuilder(output);
+		
+		// 리스폰스 JSON 빌드
+	    response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
+		
 	    return response_json;
 	}
 	
+	// 다음 다섯개 뉴스 가져옴 
 	@RequestMapping(value = "/p/s_n_next2", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject listAllNext2(@RequestBody JSONObject request) throws Exception {
-		JSONObject output = new JSONObject();
+		
+		logger.info("S_N_NEXT2");
+		
+		// 리스트 정보 가져오기 
 		List<AdaptationVO > all_list = service.listAll();
+		
+		// 포문 돌아가면서 리스폰스 결과 추가 
 		for (int i = 0; i < 5; i++) {
-	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i+10).getAdaptation_content());
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+11) + "번. " + all_list.get(i+10).getAdaptation_content());
 	    }
-	    JSONObject response_json = JSONBuilder(output);
+		
+		// 리스폰스 JSON 빌드
+	    response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
+		
 	    return response_json;
 	}
 	
+	// 다음 다섯개 뉴스 가져옴 
 	@RequestMapping(value = "/p/s_n_next3", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject listAllNext3(@RequestBody JSONObject request) throws Exception {
-		JSONObject output = new JSONObject();
+		
+		logger.info("S_N_NEXT3");
+		
+		// 리스트 정보 가져오기 
 		List<AdaptationVO > all_list = service.listAll();
+		
+		// 포문 돌아가면서 리스폰스 결과 추가 
 		for (int i = 0; i < 5; i++) {
-	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(i+15).getAdaptation_content());
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+16) + "번. " + all_list.get(i+15).getAdaptation_content());
 	    }
-	    JSONObject response_json = JSONBuilder(output);
+		
+		// 리스폰스 JSON 빌드
+	    response_json = JSONBuilder(output);
 		logger.info(response_json.toString());
+		
 	    return response_json;
 	}
 	
+	// 인풋 뉴스 발화 시작 
+	@RequestMapping(value = "/p/s_n_num", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject readByNum(@RequestBody JSONObject request) throws Exception {
+		
+		logger.info("S_N_NUM");
+		
+		// 리퀘스트 JSON 파싱 
+		JsonNode obj = mapper.readTree(request.toString());
+		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
+		
+		// 리스폰스 JSON 빌드
+		if (index < 21) {
+			output.put("flag", "True");
+		}
+		else {
+			output.put("flag", "False");
+		}
+	    response_json = JSONBuilder(output);
+	    
+		logger.info(response_json.toString());
+		
+	    return response_json;
+	}
+	
+	// 인풋 받은 숫자를 인덱스로 사용해서 번안 가져오기 
 	@RequestMapping(value = "/p/s_n_numSingle", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject readByNumSingle(@RequestBody JSONObject request) throws Exception {
-		JSONObject output = new JSONObject();
-		ObjectMapper mapper = new ObjectMapper();
+		
+		logger.info("S_N_NUMSINGLE");
+		
+		// 리스트 정보 가져오기 
+		List<AdaptationVO > all_list = service.listAll();
+		
+		// 리퀘스트 JSON 파싱 
 		JsonNode obj = mapper.readTree(request.toString());
 		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
-		List<AdaptationVO > all_list = service.listAll();
-		output.put("news" + String.valueOf(index), String.valueOf(index) + "번. " + all_list.get(index - 1).getAdaptation_content());
-	    JSONObject response_json = JSONBuilder(output);
+		
+		// 리스폰스 JSON 빌드 
+		output.put("flag", "True");
+		output.put("news", String.valueOf(index) + "번. " + all_list.get(index - 1).getAdaptation_content());
+	    response_json = JSONBuilder(output);
+	    
 		logger.info(response_json.toString());
+		
 	    return response_json;
 	}
 	
+	// 인풋 받은 숫자부터 다섯개 번안 가져오기 
 	@RequestMapping(value = "/p/s_n_numFrom", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject readByNumFrom(@RequestBody JSONObject request) throws Exception {
-		JSONObject output = new JSONObject();
-		ObjectMapper mapper = new ObjectMapper();
+		
+		logger.info("S_N_NUMFROM");
+		
+		// 리스트 정보 가져오기 
+		List<AdaptationVO > all_list = service.listAll();
+
+		// 리퀘스트 JSON 파싱 
 		JsonNode obj = mapper.readTree(request.toString());
 		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
-		List<AdaptationVO > all_list = service.listAll();
+		
+		// 포문 돌아가면서 리스폰스 결과 추가 
 		for (int i = 0; i < 5; i++) {
-	    	output.put("news" + String.valueOf(i+1), String.valueOf(i+1) + "번. " + all_list.get(index).getAdaptation_content());
+	    	output.put("news" + String.valueOf(i+1), String.valueOf(index) + "번. " + all_list.get(index).getAdaptation_content());
 	    	index = index + 1;
 	    }
-	    JSONObject response_json = JSONBuilder(output);
+		
+		// 리스폰스 JSON 빌드 
+		output.put("flag", "True");
+	    response_json = JSONBuilder(output);
+	    
 		logger.info(response_json.toString());
+		
 	    return response_json;
 	}
 	

@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>김기자 뉴스</title>
 </head>
 <body>
+
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="/adaptation/w/listAll">김기자 뉴스</a>
+</nav>
 
 <form action="/user/loginPost" method="post">
 	<div class="form-group has-feedback">

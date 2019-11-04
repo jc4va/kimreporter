@@ -26,11 +26,8 @@ public class AdaptationDAOTest {
 	
 	@Test
 	public void testCreate() throws Exception {
-		AdaptationVO adaptation = new AdaptationVO();
-		adaptation.setAdaptation_id("2019239182");
-		adaptation.setArticle_title("테스트 타이틀 ");
-		adaptation.setArticle_content("테스트 콘텐트 ");
-		dao.update(adaptation);
-		logger.info(adaptation.toString());
+		AdaptationVO vo = new AdaptationVO();
+		dao.create(vo, "hi", "hi", "1231231123", 1);
+		logger.info(vo.toString());
 	}
 }

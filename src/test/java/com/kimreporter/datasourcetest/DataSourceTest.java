@@ -3,6 +3,7 @@ package com.kimreporter.datasourcetest;
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -23,10 +24,11 @@ public class DataSourceTest {
 	@Test
 	public void testConnection() throws Exception{
 		try(Connection con=(Connection) ds.getConnection()) {
+			System.out.println("CON >> ");
 			System.out.println(con);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 }

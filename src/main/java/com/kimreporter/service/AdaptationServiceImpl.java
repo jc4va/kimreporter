@@ -26,6 +26,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 		String url = "https://media.daum.net/ranking/popular/";
 		String news_url = "https://news.v.daum.net/v/";
 		ArrayList<ArrayList<String> > summarized_news = new ArrayList<ArrayList<String> >();
+		List<AdaptationVO > all_list = dao.listAll();
 		
 		try {
 			Document doc = Jsoup.connect(url).get();
@@ -66,6 +67,36 @@ public class AdaptationServiceImpl implements AdaptationService{
 					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
 				}
 			}
+			/*
+			
+			for (ArrayList<String> arr:summarized_news) {
+				
+				AdaptationVO vo = dao.read(arr.get(0)); // 크롤링한 기사 하나하나의 id로 이미 db에 저장되어있는 adaptation을 불러온다 
+				
+				if (vo != null  && Integer.valueOf(arr.get(1)) != vo.getRanking()) {
+					vo.setRanking(Integer.valueOf(arr.get(1)));
+				}
+				
+				else if (vo == null) {
+					vo.setRanking(-1);
+				}
+				
+				else {
+					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
+				}
+				----
+				
+				if (vo != null) {
+					vo.setRanking(Integer.valueOf(arr.get(1)));
+					dao.update(vo);
+				} else {
+					dao.create(adaptation, arr.get(2), arr.get(3), arr.get(0), Integer.valueOf(arr.get(1)));
+				}
+				
+				*/
+			// loop through summarized_news and today_list
+			// if vo in today_list not in summarized_news -> set ranking to minus
+			// if vo in today_list -> update ranking 
 			
 		} catch (IOException e) {
 			e.printStackTrace();

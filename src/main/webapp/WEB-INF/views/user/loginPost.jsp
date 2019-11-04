@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>김기자 뉴스</title>
 </head>
 <body>
 <script type="text/javascript">self.location = "/adaptation/w/listAll";

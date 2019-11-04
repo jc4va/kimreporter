@@ -6,12 +6,12 @@
 <mapper namespace="com.kimreporter.mapper.UserInfoMapper">
 
 <insert id="register">
-INSERT INTO TBL_USER_INFO(user_email, user_pwd, user_name, user_id)
+INSERT INTO tbl_user_info(user_email, user_pwd, user_name, user_id)
 VALUES(#{user_email}, #{user_pwd}, #{user_name}, #{user_id})
 </insert>
 
 <select id="login" resultType="UserInfoVO">
-SELECT * from TBL_USER_INFO WHERE user_id = #{user_id}
+SELECT * from tbl_user_info WHERE user_id = #{user_id}
 </select>
 
 </mapper>

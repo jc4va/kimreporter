@@ -1,13 +1,15 @@
 package com.kimreporter.domain;
 
-public class UserInfoVO {
+import java.io.Serializable;
+
+public class UserInfoVO implements Serializable {
 	
 	private String user_email;
 	private String user_pwd;
 	private String user_name;
 	private String user_id;
 	
-	public UserInfoVO() {
+	public UserInfoVO() throws Exception{
 	}
 	public UserInfoVO(String user_email, String user_pwd, String user_name, String user_id) {
 		this.user_email = user_email;

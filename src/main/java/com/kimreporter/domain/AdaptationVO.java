@@ -1,6 +1,8 @@
 package com.kimreporter.domain;
 
-public class AdaptationVO {
+import java.io.Serializable;
+
+public class AdaptationVO implements Serializable{
 	
 	private String adaptation_id;
 	private String user_id;
@@ -10,7 +12,7 @@ public class AdaptationVO {
 	private int ranking;
 	private String inserted_time;
 	
-	public AdaptationVO() {
+	public AdaptationVO() throws Exception {
 	}
 	
 	public AdaptationVO(String adaptation_id, String user_id, String adaptation_content, String article_title,

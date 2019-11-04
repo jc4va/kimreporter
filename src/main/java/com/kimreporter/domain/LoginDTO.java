@@ -1,6 +1,8 @@
 package com.kimreporter.domain;
 
-public class LoginDTO {
+import java.io.Serializable;
+
+public class LoginDTO implements Serializable {
 	
 	private String user_id;
 	private String user_pwd;
