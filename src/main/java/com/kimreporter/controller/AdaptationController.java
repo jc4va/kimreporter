@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -53,8 +54,9 @@ public class AdaptationController {
 	
 	// 전체 번안 가져오기 
 	@RequestMapping(value = "/w/listAll", method = RequestMethod.GET)
-	public void listAll(Model model) throws Exception {
+	public void listAll(Model model, HttpSession session) throws Exception {
 		logger.info("List of All Adaptations GET");
+		logger.info(session.getAttribute("LOGIN").toString());
 		model.addAttribute("list", service.listAll());
 		logger.info(service.listAll().toString());
 	}

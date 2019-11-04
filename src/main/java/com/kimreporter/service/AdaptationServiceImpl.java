@@ -10,13 +10,18 @@ import javax.inject.Inject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.kimreporter.controller.UserInfoController;
 import com.kimreporter.domain.AdaptationVO;
 import com.kimreporter.persistence.AdaptationDAO;
 
 @Service
 public class AdaptationServiceImpl implements AdaptationService{
+	
+	private static final Logger logger = LoggerFactory.getLogger(AdaptationServiceImpl.class);
 	
 	@Inject 
 	private AdaptationDAO dao;
@@ -26,6 +31,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 		String url = "https://media.daum.net/ranking/popular/";
 		String news_url = "https://news.v.daum.net/v/";
 		ArrayList<ArrayList<String> > summarized_news = new ArrayList<ArrayList<String> >();
+		ArrayList<String> links_array = new ArrayList<String> ();
 		List<AdaptationVO > all_list = dao.listAll();
 		
 		try {
@@ -40,6 +46,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 				String link = links.get(i).attr("abs:href").toString();
 				String rank = rankings.get(i).text();
 				String parsed_link = link.substring(link.lastIndexOf("/") + 1);
+				links_array.add(parsed_link);
 				Document opened_link = Jsoup.connect(news_url+ parsed_link).get();
 				Elements summary = opened_link.getElementsByClass("layer_util layer_summary").select("p");
 				if (summary.text().isEmpty()) {
@@ -57,12 +64,16 @@ public class AdaptationServiceImpl implements AdaptationService{
 				i++;
 			}
 			
+			for (AdaptationVO vo:all_list) {
+				if (Arrays.asList(links_array).contains(vo.getAdaptation_id()) == false) {
+					vo.setRanking(-1);
+					dao.update(vo);
+				}
+			}
 			// create(AdaptationVO vo, String title, String content, String id, int ranking)
 			
-			// 1: saved: 1 new: 5
-			// 2: saved: null new: 1
-			// 3: saved: 1 new: null
-			
+			// 가져온 뉴스가 데이터베이스에 이미 저장되어 있을경우 
+			/*
 			for (ArrayList<String> arr:summarized_news) {
 				
 				AdaptationVO vo = dao.read(arr.get(0));
@@ -75,14 +86,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 				}
 			}
 			
-			for (AdaptationVO vo:all_list) {
-				for (ArrayList<String> arr:summarized_news) {
-					if (vo.getAdaptation_id() == arr.get(0)) {
-						vo.setRanking(Integer.valueOf(arr.get(1)));
-					}
-				}
-			}
-			
+			*/
 			
 			
 		} catch (IOException e) {

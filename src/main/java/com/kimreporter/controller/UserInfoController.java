@@ -70,5 +70,5 @@ public class UserInfoController {
 		
 		model.addAttribute("User", vo);
 	}
-
+	
 }
