@@ -3,6 +3,8 @@ package com.kimreporter.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -81,13 +83,6 @@ public class AdaptationServiceImpl implements AdaptationService{
 					dao.updateRanking(vo);
 				}
 			}
-			// create(AdaptationVO vo, String title, String content, String id, int ranking)
-			
-			// 가져온 뉴스가 데이터베이스에 이미 저장되어 있을경우 
-			/*
-			
-			*/
-			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -107,8 +102,12 @@ public class AdaptationServiceImpl implements AdaptationService{
 	}
 
 	@Override
-	public void delete(String adaptation_id) throws Exception {
-		dao.delete(adaptation_id);
+	public void delete() throws Exception {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		String yesterday = cal.getTime().toString();
+		
+		dao.delete(yesterday);
 		
 	}
 

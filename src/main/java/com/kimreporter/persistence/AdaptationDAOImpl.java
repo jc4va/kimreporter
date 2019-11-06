@@ -30,8 +30,8 @@ public class AdaptationDAOImpl implements AdaptationDAO{
 	}
 
 	@Override
-	public void delete(String adaptation_id) throws Exception {
-		session.delete(namespace+ ".delete", adaptation_id);
+	public void delete(String yesterday) throws Exception {
+		session.delete(namespace+ ".delete");
 		
 	}
 

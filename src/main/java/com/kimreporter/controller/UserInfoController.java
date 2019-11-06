@@ -71,4 +71,12 @@ public class UserInfoController {
 		model.addAttribute("User", vo);
 	}
 	
+	@RequestMapping(value= "/logout", method=RequestMethod.GET) 
+	public String logout(HttpSession session, RedirectAttributes rttr) throws Exception {
+		logger.info("LOGOUT");
+		service.logout(session);
+		rttr.addFlashAttribute("msg", "logout");
+		return "redirect:/";
+	}
+	
 }

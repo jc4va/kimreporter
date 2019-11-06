@@ -57,18 +57,10 @@ public class AdaptationController {
 	public void listAll(Model model, HttpSession session) throws Exception {
 		logger.info("List of All Adaptations GET");
 		model.addAttribute("list", service.listAll());
+		logger.info(session.getAttribute("login").toString());
 		logger.info(service.listAll().toString());
 	}
-	
-	// 번안 삭제 
-	@RequestMapping(value = "/w/delete", method = RequestMethod.POST)
-	public String delete(@RequestParam("adaptation_id") String adaptation_id, RedirectAttributes rttr) throws Exception {
-		logger.info("Delete GET");
-		service.delete(adaptation_id);
-		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/adaptation/w/listAll";
-	}
-	
+
 	// 번안 수정 GET
 	@RequestMapping(value = "/w/modify", method = RequestMethod.GET)
 	public void modify(String adaptation_id, Model model) throws Exception{
@@ -89,6 +81,14 @@ public class AdaptationController {
 	}
 	
 	// NUGU PLAY와 연결하는 부분 
+	
+	// 번안 삭제 
+	@RequestMapping(value = "/p/delete", method = RequestMethod.GET)
+	public void delete(RedirectAttributes rttr) throws Exception {
+		logger.info("Delete GET");
+		service.delete();
+		rttr.addFlashAttribute("msg", "SUCCESS");
+	}
 	
 	// 크롤링 시작 
 	@RequestMapping(value = "/p/create", method = RequestMethod.GET) 

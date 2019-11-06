@@ -19,7 +19,9 @@
 </select>
 
 <update id="update">
-	update TBL_ADAPTATION set adaptation_content=#{adaptation_content}
+	update TBL_ADAPTATION set 
+	adaptation_content=#{adaptation_content},
+	user_id=#{user_id}
 	where adaptation_id=#{adaptation_id}
 </update>
 
@@ -28,8 +30,11 @@
 	where adaptation_id=#{adaptation_id}
 </update>
 
-<delete id="delete">
-	delete from TBL_ADAPTATION where adaptation_id = #{adaptation_id}
+<delete id="delete" parameterType="String">
+<![CDATA[
+	delete from TBL_ADAPTATION 
+	where DATE(inserted_time) < DATE(#{yesterday})
+]]>
 </delete>
 
 <select id="listAll" resultType="com.kimreporter.domain.AdaptationVO">

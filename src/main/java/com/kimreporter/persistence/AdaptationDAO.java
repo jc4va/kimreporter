@@ -14,7 +14,7 @@ public interface AdaptationDAO {
 	
 	public void updateRanking(AdaptationVO vo) throws Exception;
 	
-	public void delete(String adaptation_id) throws Exception;
+	public void delete(String yesterday) throws Exception;
 	
 	public List<AdaptationVO> listAll() throws Exception;
 

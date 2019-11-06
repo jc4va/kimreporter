@@ -1,6 +1,7 @@
 package com.kimreporter.service;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Override
 	public UserInfoVO login(LoginDTO dto) throws Exception {
 		return dao.login(dto);
+	}
+
+	@Override
+	public void logout(HttpSession session) {
+		session.invalidate();
 	}
 
 }

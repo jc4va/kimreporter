@@ -5,7 +5,6 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-HomePage Placeholder
+<script type="text/javascript">self.location = "/adaptation/w/listAll"; </script>
 </body>
 </html>
