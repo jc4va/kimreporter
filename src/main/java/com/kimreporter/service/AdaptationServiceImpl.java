@@ -1,6 +1,7 @@
 package com.kimreporter.service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.kimreporter.controller.AdaptationController;
 import com.kimreporter.controller.UserInfoController;
 import com.kimreporter.domain.AdaptationVO;
 import com.kimreporter.persistence.AdaptationDAO;
@@ -105,9 +107,10 @@ public class AdaptationServiceImpl implements AdaptationService{
 	public void delete() throws Exception {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -7);
-		String yesterday = cal.getTime().toString();
-		
-		dao.delete(yesterday);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String week = format1.format(cal.getTime());
+
+		dao.delete(week);
 		
 	}
 

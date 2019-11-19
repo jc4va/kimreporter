@@ -9,6 +9,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +48,11 @@ public class CrawlerTest {
 	
 	@Test
 	public void CrawlTest() throws Exception {
-		logger.info(dao.read("20191104180530370").getAdaptation_content());
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		String yesterday = cal.getTime().toString();
+		logger.info("hi");
+		logger.info(yesterday);
 	}
 
 }
