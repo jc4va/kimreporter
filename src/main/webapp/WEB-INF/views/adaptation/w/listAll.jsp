@@ -167,7 +167,7 @@
 								<li><a href="#"><span class="icon icon-phone"></span><span
 										class="text">010-2895-3546</span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
-										class="text">kimreporter@gmail.com</span></a></li>
+										class="text">jhlican@naver.com</span></a></li>
 							</ul>
 						</div>
 					</div>

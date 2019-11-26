@@ -1,5 +1,7 @@
 package com.kimreporter.controller;
 
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -53,17 +55,21 @@ public class UserInfoController {
 		logger.info("LOGIN POST");
 		String LOGIN = "login";
 		
-		UserInfoVO vo = service.login(dto);
+		UserInfoVO vo = new UserInfoVO();
 		
-		boolean passMatch = PassCrypto.matches(dto.getUser_pwd(), vo.getUser_pwd());
-		
-		if (vo != null && passMatch) {
-			logger.info("LOGIN SUCCESS");
-			session.setAttribute(LOGIN, vo);
-			response.sendRedirect("/adaptation/w/listAll");
+		try {
+			vo = service.login(dto);
+			boolean passMatch = PassCrypto.matches(dto.getUser_pwd(), vo.getUser_pwd());
+			
+			if (vo != null && passMatch) {
+				logger.info("LOGIN SUCCESS");
+				session.setAttribute(LOGIN, vo);
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('정보를 확인해주세요.'); </script>");
+				response.sendRedirect("/adaptation/w/listAll");
+			}
 		}
-		
-		else if (vo == null || !passMatch) {
+		catch (NullPointerException e){
 			logger.info("LOGIN - WRONG PASSWORD");
 			response.sendRedirect("/user/login");
 		}

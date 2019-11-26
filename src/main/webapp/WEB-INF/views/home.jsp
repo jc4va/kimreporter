@@ -10,6 +10,8 @@
   <head>
     <title>김기자 뉴스</title>
     <meta charset="utf-8">
+    <meta name="google-site-verification" content="BIPffP0cAVAYHjQAKrRbL6BnWf-N10HQWOJlxOd2C08" />
+    <meta name="naver-site-verification" content="d7327092205a20753c6bc1b3f593691c8e58b739"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,,500,600,700" rel="stylesheet">
@@ -133,7 +135,7 @@
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">서울시 중구 삼일대로 358 9층</span></li>
 	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">010-2895-3546</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">kimreporter@gmail.com</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">jhlican@naver.com</span></a></li>
 	              </ul>
 	            </div>
             </div>

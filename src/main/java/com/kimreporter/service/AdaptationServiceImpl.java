@@ -29,7 +29,8 @@ public class AdaptationServiceImpl implements AdaptationService{
 	private AdaptationDAO dao;
 
 	@Override
-	public void regist(AdaptationVO adaptation) throws Exception {
+	public void regist(AdaptationVO adaptation) throws Exception {	
+		// 초기 변수 
 		String url = "https://media.daum.net/ranking/popular/";
 		String news_url = "https://news.v.daum.net/v/";
 		ArrayList<ArrayList<String> > summarized_news = new ArrayList<ArrayList<String> >();
@@ -43,6 +44,8 @@ public class AdaptationServiceImpl implements AdaptationService{
 			// 링크 id (맨 뒤에 17숫자)를 찾아서 저장  
 			int article_counter = 0;
 			int i = 0;
+			
+			// 요약본이 없으면 스킵하고 있으면 리스트에 20개가 될 때까지 추가함
 			while(article_counter < 20) {
 				ArrayList<String> news_links = new ArrayList<String>();
 				String link = links.get(i).attr("abs:href").toString();
@@ -66,6 +69,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 				i++;
 			}
 			
+			// 업데이트문 1: 현재 랭킹에 있는 뉴스 순위 업데이트 
 			for (ArrayList<String> arr:summarized_news) {
 				
 				String idx = arr.get(0);
@@ -79,6 +83,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 				}
 			}
 			
+			// 업데이트문 2: 현재 랭킹에 없는 뉴스 -1로 설정 
 			for (AdaptationVO vo:all_list) {
 				if (links_array.contains(vo.getAdaptation_id()) == false) {
 					vo.setRanking(-1);
