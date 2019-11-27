@@ -64,8 +64,6 @@ public class UserInfoController {
 			if (vo != null && passMatch) {
 				logger.info("LOGIN SUCCESS");
 				session.setAttribute(LOGIN, vo);
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('정보를 확인해주세요.'); </script>");
 				response.sendRedirect("/adaptation/w/listAll");
 			}
 		}

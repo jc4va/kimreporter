@@ -113,7 +113,7 @@
 										<div id='menuOne${AdaptationVO.adaptation_id}' class="collapse">
 											<div class="card-body">
 												<p>${AdaptationVO.article_content}</p>
-												<span class="subheading"><a href="https://news.v.daum.net/v/${AdaptationVO.adaptation_id}">기사 전문</a></span>
+												<span class="subheading"><a target="_blank" href="https://news.v.daum.net/v/${AdaptationVO.adaptation_id}">기사 전문</a></span>
 											</div>
 											</hr>
 											<form
