@@ -92,7 +92,7 @@
 								placeholder="이름">
 						</div>
 						<div class="form-group" style="text-align: center;">
-							<input type="text" name="user_email" class="form-control"
+							<input type="email" name="user_email" class="form-control"
 								placeholder="이메일">
 						</div>
 						<div class="form-group" style="text-align: center;">
@@ -100,9 +100,14 @@
 								placeholder="아이디">
 						</div>
 						<div class="form-group" style="text-align: center;">
-							<input type="password" name="user_pwd" class="form-control"
+							<input type="password" name="user_pwd" id="user_pwd" class="form-control"
 								placeholder="비밀번호">
 						</div>
+						<div class="form-group" style="text-align: center;">
+							<input type="password" name="user_pwd_confirm" id="user_pwd_confirm"
+							class="form-control" placeholder="비밀번호 확인" onChange="checkPassword();">
+						</div>
+						<div id="divCheckPasswordMatch"></div>
 						<div class="form-group" style="text-align: center;">
 							<input type="submit" value="회원가입"
 								class="btn btn-primary py-3 px-5">
@@ -135,7 +140,7 @@
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon icon-map-marker"></span><span
-									class="text">서울시 중구 삼일대로 358 9층</span></li>
+									class="text">서울시 중구 삼일대로 358 신한L타워, 9층 SK 이노베이션 Lab 8</span></li>
 								<li><a href="#"><span class="icon icon-phone"></span><span
 										class="text">010-2895-3546</span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
@@ -188,3 +193,20 @@
 
 </body>
 </html>
+
+<script>
+function checkPassword() {
+    var password = $("#user_pwd").val();
+    var confirmPassword = $("#user_pwd_confirm").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
+    else
+        $("#divCheckPasswordMatch").html("비밀번호가 일치합니다.").css('color', 'green');
+}
+
+$(document).ready(function () {
+   $("#user_pwd, #user_pwd_confirm").keyup(checkPassword);
+});
+
+</script>

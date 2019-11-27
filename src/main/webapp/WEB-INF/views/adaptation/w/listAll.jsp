@@ -163,7 +163,7 @@
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon icon-map-marker"></span><span
-									class="text">서울시 중구 삼일대로 358 9층</span></li>
+									class="text">서울시 중구 삼일대로 358 신한L타워, 9층 SK 이노베이션 Lab 8</span></li>
 								<li><a href="#"><span class="icon icon-phone"></span><span
 										class="text">010-2895-3546</span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
