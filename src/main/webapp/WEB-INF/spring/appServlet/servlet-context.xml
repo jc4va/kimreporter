@@ -19,6 +19,8 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	
 	<resources mapping="/sitemap.xml" location="/WEB-INF/sitemap.xml" order="0"/>
+	
+	<resources mapping="/robots.txt" location="/WEB-INF/robots.txt" order="0"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
@@ -33,6 +35,14 @@
     <interceptors>
         <interceptor>
             <mapping path="/adaptation/w/*"/>
+            <beans:ref bean="AuthInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/user/mypage"/>
+            <beans:ref bean="AuthInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/user/myadaptation"/>
             <beans:ref bean="AuthInterceptor"/>
         </interceptor>
     </interceptors>

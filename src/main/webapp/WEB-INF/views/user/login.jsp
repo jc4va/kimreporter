@@ -71,6 +71,8 @@
 						</c:when>
 						<c:when test='${sessionScope.login.user_id ne null}'>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="/user/myadaptation">내 번안</a></li>
+							<li class="nav-item"><a class="nav-link" href="/user/mypage">마이페이지</a></li>
 							<li class="nav-item cta"><a href="/adaptation/w/listAll"
 								class="nav-link"><span>번안하기</span></a></li>
 						</c:when>
@@ -129,7 +131,7 @@
 								<li><span class="icon icon-map-marker"></span><span
 									class="text">서울시 중구 삼일대로 358 신한L타워, 9층 SK 이노베이션 Lab 8 </span></li>
 								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">010-2895-3546</span></a></li>
+										class="text">010-3344-1365</span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
 										class="text">jhlican@naver.com</span></a></li>
 							</ul>

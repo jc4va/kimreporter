@@ -71,6 +71,7 @@
 						</c:when>
 						<c:when test='${sessionScope.login.user_id ne null}'>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="/user/myadaptation">내 번안</a></li>
 							<li class="nav-item cta"><a href="/adaptation/w/listAll"
 								class="nav-link"><span>번안하기</span></a></li>
 						</c:when>
@@ -109,7 +110,7 @@
 						</div>
 						<div id="divCheckPasswordMatch"></div>
 						<div class="form-group" style="text-align: center;">
-							<input type="submit" value="회원가입"
+							<input type="submit" id="register" name="register" value="회원가입"
 								class="btn btn-primary py-3 px-5">
 						</div>
 					</form>
@@ -142,7 +143,7 @@
 								<li><span class="icon icon-map-marker"></span><span
 									class="text">서울시 중구 삼일대로 358 신한L타워, 9층 SK 이노베이션 Lab 8</span></li>
 								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">010-2895-3546</span></a></li>
+										class="text">010-3344-1365</span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
 										class="text">jhlican@naver.com</span></a></li>
 							</ul>
@@ -199,10 +200,14 @@ function checkPassword() {
     var password = $("#user_pwd").val();
     var confirmPassword = $("#user_pwd_confirm").val();
 
-    if (password != confirmPassword)
+    if (password != confirmPassword){
         $("#divCheckPasswordMatch").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
-    else
+        $('#register').attr('disabled', true);
+    }
+    else {
         $("#divCheckPasswordMatch").html("비밀번호가 일치합니다.").css('color', 'green');
+        $('#register').attr('disabled', false);
+    }
 }
 
 $(document).ready(function () {

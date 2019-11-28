@@ -1,10 +1,13 @@
 package com.kimreporter.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import com.kimreporter.domain.AdaptationVO;
 import com.kimreporter.domain.LoginDTO;
 import com.kimreporter.domain.UserInfoVO;
 import com.kimreporter.persistence.UserInfoDAO;
@@ -28,6 +31,26 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Override
 	public void logout(HttpSession session) {
 		session.invalidate();
+	}
+
+	@Override
+	public int selectListCount(String user_id) throws Exception {
+		return dao.selectListCount(user_id);
+	}
+
+	@Override
+	public List<AdaptationVO> selectMyAdaptations(String user_id) throws Exception {
+		return dao.selectMyAdaptations(user_id);
+	}
+
+	@Override
+	public void updateUser(UserInfoVO vo) throws Exception {
+		dao.updateUser(vo);
+	}
+
+	@Override
+	public UserInfoVO selectData(String user_id) throws Exception {
+		return dao.selectData(user_id);
 	}
 
 }
