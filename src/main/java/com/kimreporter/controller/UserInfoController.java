@@ -23,7 +23,7 @@ import com.kimreporter.service.UserInfoService;
 import com.kimreporter.utils.PassCrypto;
 
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("/user")
 public class UserInfoController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
@@ -53,7 +53,7 @@ public class UserInfoController {
 	}
 	
 	@RequestMapping(value = "/myadaptation", method=RequestMethod.GET)
-	public String myAdaptationGET(HttpServletResponse response, HttpSession session, Model model) throws Exception{
+	public String myAdaptationGET(HttpSession session, Model model) throws Exception{
 		UserInfoVO vo = (UserInfoVO) session.getAttribute("login");
 		List<AdaptationVO> myAdaptations = service.selectMyAdaptations(vo.getUser_id());
 		int count = service.selectListCount(vo.getUser_id());
@@ -64,7 +64,7 @@ public class UserInfoController {
 	}
 	
 	@RequestMapping(value = "/mypage", method=RequestMethod.GET)
-	public String myPageGET(HttpServletResponse response, HttpSession session, Model model) throws Exception{
+	public String myPageGET(HttpSession session, Model model) throws Exception{
 		UserInfoVO vo = (UserInfoVO) session.getAttribute("login");
 		model.addAttribute(service.selectData(vo.getUser_id()));
 		return "/user/mypage";

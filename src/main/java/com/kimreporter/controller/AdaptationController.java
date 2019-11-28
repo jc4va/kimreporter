@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 
 @Controller
-@RequestMapping("/adaptation/*")
+@RequestMapping("/adaptation")
 public class AdaptationController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdaptationController.class);
