@@ -60,14 +60,14 @@ public class UserInfoController {
 		model.addAttribute("list", myAdaptations);
 		model.addAttribute("count", count);
 		logger.info(String.valueOf(count));
-		return "/user/myadaptation";
+		return "user/myadaptation";
 	}
 	
 	@RequestMapping(value = "/mypage", method=RequestMethod.GET)
 	public String myPageGET(HttpSession session, Model model) throws Exception{
 		UserInfoVO vo = (UserInfoVO) session.getAttribute("login");
 		model.addAttribute(service.selectData(vo.getUser_id()));
-		return "/user/mypage";
+		return "user/mypage";
 	}
 	
 	@RequestMapping(value = "/mypage", method=RequestMethod.POST) 

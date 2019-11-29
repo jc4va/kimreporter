@@ -33,7 +33,7 @@
 <delete id="delete" parameterType="String">
 <![CDATA[
 	delete from TBL_ADAPTATION 
-	where DATE(inserted_time) < DATE(#{week}) AND user_id = ""
+	where DATE(inserted_time) < DATE(#{week}) AND user_id IS NULL
 ]]>
 </delete>
 

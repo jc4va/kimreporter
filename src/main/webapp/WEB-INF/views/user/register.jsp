@@ -72,6 +72,7 @@
 						<c:when test='${sessionScope.login.user_id ne null}'>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 							<li class="nav-item"><a class="nav-link" href="/user/myadaptation">내 번안</a></li>
+							<li class="nav-item"><a class="nav-link" href="/user/mypage">마이페이지</a></li>
 							<li class="nav-item cta"><a href="/adaptation/w/listAll"
 								class="nav-link"><span>번안하기</span></a></li>
 						</c:when>
