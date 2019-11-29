@@ -41,7 +41,7 @@
 	<![CDATA[
 	select *
 	from TBL_ADAPTATION
-	where ranking > 0 AND DATE(inserted_time) = DATE(CURRENT_TIMESTAMP)
+	where ranking > 0 AND TIMESTAMPDIFF(HOUR, inserted_time, CURRENT_TIMESTAMP) < 24
 	order by ranking asc
 	LIMIT 20
 	]]>
