@@ -276,7 +276,7 @@ public class AdaptationController {
 
 		// 리퀘스트 JSON 파싱
 		JsonNode obj = mapper.readTree(request.toString());
-		int index = Integer.valueOf(obj.at("/action/parameters/start/value").asText());
+		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
 
 		// 포문 돌아가면서 리스폰스 결과 추가
 		int i = 0;
