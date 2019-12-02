@@ -280,7 +280,7 @@ public class AdaptationController {
 
 		// 포문 돌아가면서 리스폰스 결과 추가
 		int i = 0;
-		while (index < service.listAll().size() && i < 5) {
+		while (index <= service.listAll().size() && i < 5) {
 			news.append(String.valueOf(index) + "번. " + all_list.get(index).getAdaptation_content());
 			index = index + 1;
 			i += 1;

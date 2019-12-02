@@ -73,7 +73,7 @@
 	        	<div class="text mt-5">
 	        		<span class="subheading">모두를 위한 뉴스 번안</span>
 	            <h1 class="mb-3"><span>협력하고,</span> <span>배려하는,</span> <span>김기자 뉴스</span></h1>
-	            <p>김기자 뉴스는 발달장애, 경계성 지능장애를 가지고 있는 사람들을 위해 보다 쉬운 뉴스를 제공하는 사이트입니다.</p>
+	            <p>김기자 뉴스는 발달장애·경계성 지능장애·비문해인·탈북민·결혼이주민·어린이 등 다양한 이유로 뉴스 이해가 어려웠던 정보 소외계층에게 포털사이트 뉴스를 요약하고, 쉽게 번안하여 읽어주는 AI 음성 서비스입니다.</p>
 	            <p><a href="adaptation/w/listAll" class="btn btn-primary px-4 py-3">번안하기</a></p>
 	          </div>
 	        </div>

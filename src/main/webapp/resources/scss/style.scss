@@ -7,7 +7,7 @@ $white: #fff;
 $black: #000;
 // $darken: #3a4348;
 
-$primary: #6927ff;
+$primary: #4FA1FB;
 $secondary: #38d39f;
 
 
@@ -1073,14 +1073,14 @@ textarea.form-control {
 	font-size: 16px;
 	padding: 5em 0;
 	padding-bottom: 3em;
-	background: #421b9b;
+	background: #4FA1FB;
 	.ftco-footer-logo {
 		text-transform: uppercase;
 		letter-spacing: .1em;
 	}
 	.ftco-footer-widget {
 		&.bg-primary{
-			background: lighten(#421b9b,10%) !important;
+			background: lighten(#4FA1FB,10%) !important;
 		}
 		h2 {
 			font-weight: normal;
