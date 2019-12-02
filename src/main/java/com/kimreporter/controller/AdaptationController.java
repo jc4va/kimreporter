@@ -221,7 +221,7 @@ public class AdaptationController {
 		int index = Integer.valueOf(obj.at("/action/parameters/index/value").asText());
 
 		// 리스폰스 JSON 빌드
-		if (index < all_list.size()) {
+		if (index <= all_list.size()) {
 			output.put("flag", "True");
 		} else {
 			output.put("flag", "False");
