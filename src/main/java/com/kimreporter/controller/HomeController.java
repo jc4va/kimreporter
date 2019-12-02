@@ -40,7 +40,6 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/health", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<String> health() {
 		return new ResponseEntity<String>("OK",HttpStatus.OK);
 	}
