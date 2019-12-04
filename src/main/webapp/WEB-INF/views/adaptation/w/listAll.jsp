@@ -10,7 +10,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>김기자 뉴스</title>
+<title>친절한 김기자</title>
+<link rel="shortcut icon" type="image/png" 
+href="${pageContext.request.contextPath}/resources/images/favicon.png">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -54,12 +56,14 @@
 
 </head>
 <body>
-
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="/">김기자 뉴스</a>
+			<a class="navbar-brand" href="/">
+		      <img alt="KimReporter" src="${pageContext.request.contextPath}/resources/images/logo.png"
+	         width=115" height="30">
+			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -148,7 +152,7 @@
 			<div class="row mb-5">
 				<div class="col-md">
 					<div class="ftco-footer-widget mb-4 bg-primary p-4">
-						<h2 class="ftco-heading-2">김기자 뉴스</h2>
+						<h2 class="ftco-heading-2">친절한 김기자</h2>
 						<ul class="ftco-footer-social list-unstyled mb-0">
 							<li class="ftco-animate"><a href="#"><span
 									class="icon-twitter"></span></a></li>

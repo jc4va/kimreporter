@@ -8,7 +8,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>김기자 뉴스</title>
+    <title>친절한 김기자</title>
+    <link rel="shortcut icon" type="image/png" 
+	href="${pageContext.request.contextPath}/resources/images/favicon.png">
     <meta charset="utf-8">
     <meta name="google-site-verification" content="BIPffP0cAVAYHjQAKrRbL6BnWf-N10HQWOJlxOd2C08" />
     <meta name="naver-site-verification" content="d7327092205a20753c6bc1b3f593691c8e58b739"/>
@@ -39,7 +41,10 @@
     
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="/">김기자 뉴스</a>
+	      <a class="navbar-brand" href="/">
+		      <img alt="KimReporter" src="${pageContext.request.contextPath}/resources/images/logo.png"
+	         width=115" height="30">
+	      </a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -72,8 +77,8 @@
 	        <div class="one-forth d-flex align-items-center ftco-animate js-fullheight">
 	        	<div class="text mt-5">
 	        		<span class="subheading">모두를 위한 뉴스 번안</span>
-	            <h1 class="mb-3"><span>협력하고,</span> <span>배려하는,</span> <span>김기자 뉴스</span></h1>
-	            <p>김기자 뉴스는 발달장애·경계성 지능장애·비문해인·탈북민·결혼이주민·어린이 등 다양한 이유로 뉴스 이해가 어려웠던 정보 소외계층에게 포털사이트 뉴스를 요약하고, 쉽게 번안하여 읽어주는 AI 음성 서비스입니다.</p>
+	            <h1 class="mb-3"><span>협력하고,</span> <span>배려하는,</span> <span>친절한 김기자</span></h1>
+	            <p>친절한 김기자는 발달장애·경계성 지능장애·비문해인·탈북민·결혼이주민·어린이 등 다양한 이유로 뉴스 이해가 어려웠던 정보 소외계층에게 포털사이트 뉴스를 요약하고, 쉽게 번안하여 읽어주는 AI 음성 서비스입니다.</p>
 	            <p><a href="adaptation/w/listAll" class="btn btn-primary px-4 py-3">번안하기</a></p>
 	          </div>
 	        </div>
@@ -86,7 +91,7 @@
       <div class="container">
       	<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 text-center heading-section ftco-animate">
-            <h2 class="mb-4">김기자 뉴스와 함께 해 주세요.</h2>
+            <h2 class="mb-4">친절한 김기자와 함께 해 주세요.</h2>
             <p>다양한 이유로 뉴스 이해가 어려웠던 정보 소외계층에게 포털사이트 뉴스를 더 쉽게 요약하고, 번안해 읽어주는 서비스</p>
           </div>
         </div>
@@ -122,7 +127,7 @@
         <div class="row mb-5">
           <div class="col-md">
             <div class="ftco-footer-widget mb-4 bg-primary p-4">
-              <h2 class="ftco-heading-2">김기자 뉴스</h2>
+              <h2 class="ftco-heading-2">친절한 김기자</h2>
               <ul class="ftco-footer-social list-unstyled mb-0">
                 <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                 <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
