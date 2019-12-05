@@ -58,4 +58,14 @@ public class UserInfoServiceImpl implements UserInfoService{
 		return dao.selectData(user_id);
 	}
 
+	@Override
+	public int selectListCountEmail(String user_email) throws Exception {
+		return dao.selectListCountEmail(user_email);
+	}
+
+	@Override
+	public int selectListCountID(String user_id) throws Exception {
+		return dao.selectListCountID(user_id);
+	}
+
 }

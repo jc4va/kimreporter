@@ -37,6 +37,18 @@
 	WHERE TBL_ADAPTATION.user_id = #{user_id}; 
 </select>
 
+<select id="selectListCountID" resultType="int">
+	SELECT COUNT(*) AS TOTCNT
+	FROM tbl_user_info 
+	WHERE user_id = #{user_id}; 
+</select>
+
+<select id="selectListCountEmail" resultType="int">
+	SELECT COUNT(*) AS TOTCNT
+	FROM tbl_user_info 
+	WHERE user_email = #{user_email}; 
+</select>
+
 <select id="selectMyAdaptations" resultType="com.kimreporter.domain.AdaptationVO">
 	SELECT * FROM kimreporter.TBL_ADAPTATION
 	LEFT JOIN tbl_user_info ON TBL_ADAPTATION.user_id = tbl_user_info.user_id

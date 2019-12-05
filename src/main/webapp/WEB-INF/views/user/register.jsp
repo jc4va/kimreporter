@@ -94,16 +94,23 @@
 					<h1 class="mb-3 bread" style="text-align: center;">회원가입</h1>
 					<form role="form" method="post" autocomplete="off">
 						<div class="form-group" style="text-align: center;">
-							<input type="text" name="user_name" class="form-control"
-								placeholder="이름">
+							<div class="input-group">
+								<input type="text" id="user_id" name="user_id" class="form-control"
+								placeholder="아이디">
+								<span class="input-group-btn">
+									<button type="button" id="checkID" name="checkID"
+										class="btn btn-primary" style="height: 100%; border-radius:0px;"> 아이디 확인</button>
+								</span>
+							</div>
+							<div id="divCheckID"></div>
 						</div>
-						<div class="form-group" style="text-align: center;">
+							<div class="form-group" style="text-align: center;">
 							<input type="email" name="user_email" class="form-control"
 								placeholder="이메일">
 						</div>
 						<div class="form-group" style="text-align: center;">
-							<input type="text" name="user_id" class="form-control"
-								placeholder="아이디">
+							<input type="text" name="user_name" class="form-control"
+								placeholder="이름">
 						</div>
 						<div class="form-group" style="text-align: center;">
 							<input type="password" name="user_pwd" id="user_pwd" class="form-control"
@@ -201,6 +208,29 @@
 </html>
 
 <script>
+
+$("#checkID").click(function() {
+	
+	var query = {user_id: $("#user_id").val()};
+	
+	$.ajax({
+		url: "/user/check_id", 
+		type: "post", 
+		data: query, 
+		success: function(data) {
+			if (data > 0) {
+				$("#divCheckID").html("이미 가입된 아이디입니다.").css('color', 'red');
+				$('#register').attr('disabled', true);
+			}
+			else {
+				$("#divCheckID").html("사용 가능한 아이디입니다.").css('color', 'green');
+				$('#register').attr('disabled', false);
+			}
+		}
+	})
+	
+});
+
 function checkPassword() {
     var password = $("#user_pwd").val();
     var confirmPassword = $("#user_pwd_confirm").val();

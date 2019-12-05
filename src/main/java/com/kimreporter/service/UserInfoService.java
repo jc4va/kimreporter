@@ -18,6 +18,8 @@ public interface UserInfoService {
 	
 	public int selectListCount(String user_id) throws Exception;
 	
+	public int selectListCountEmail(String user_email) throws Exception;
+	
 	public List<AdaptationVO> selectMyAdaptations(String user_id) throws Exception;
 	
 	public void updateUser(UserInfoVO vo) throws Exception;
@@ -25,5 +27,7 @@ public interface UserInfoService {
 	public void updateUserStatus(String user_id) throws Exception;
 	
 	public UserInfoVO selectData(String user_id) throws Exception;
+	
+	public int selectListCountID(String user_id) throws Exception;
 
 }

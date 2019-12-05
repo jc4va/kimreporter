@@ -13,6 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kimreporter.domain.AdaptationVO;
@@ -54,7 +56,7 @@ public class UserInfoController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String RegisterPOST(UserInfoVO vo, RedirectAttributes rttr) throws Exception {
 		logger.info("post register");
-
+		
 		String encText = PassCrypto.encode(vo.getUser_pwd());
 		vo.setUser_pwd(encText);
 		service.register(vo);
@@ -72,6 +74,18 @@ public class UserInfoController {
 		Transport.send(msg);
 
 		return "redirect:/user/register_joining";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/check_id", method = RequestMethod.POST)
+	public int checkID(HttpServletRequest request) throws Exception{
+		String user_id = request.getParameter("user_id");
+		int count = service.selectListCountID(user_id);
+		
+		logger.info(user_id);
+		logger.info(String.valueOf(count));
+		
+		return count;
 	}
 
 	@RequestMapping(value = "/approve_user", method = RequestMethod.PUT)
