@@ -4,3 +4,12 @@
 
 **회사소개**
 ![company_title](./src/main/webapp/resources/images/samples/company_title.jpg)
+
+**누구플레이 연결 용 API**
+1. action.PlayNews
+2. action.PlayNext1
+3. action.PlayNext2
+4. action.PlayNext3
+5. action.PlayNum
+6. action.PlayOne
+7. action.PlayMany
