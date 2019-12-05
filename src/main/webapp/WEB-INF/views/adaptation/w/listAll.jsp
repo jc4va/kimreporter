@@ -13,6 +13,7 @@
 <title>친절한 김기자</title>
 <link rel="shortcut icon" type="image/png" 
 href="${pageContext.request.contextPath}/resources/images/favicon.png">
+<link rel="apple-touch-icon image_src" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon.png">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
