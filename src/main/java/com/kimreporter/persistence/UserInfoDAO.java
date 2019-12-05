@@ -20,4 +20,6 @@ public interface UserInfoDAO {
 
 	public UserInfoVO selectData(String user_id);
 
+	public void updateUserStatus(String user_id);
+
 }

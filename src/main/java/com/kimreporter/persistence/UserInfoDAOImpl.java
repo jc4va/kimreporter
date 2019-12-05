@@ -50,4 +50,9 @@ public class UserInfoDAOImpl implements UserInfoDAO{
 		return sql.selectOne(namespace + ".selectData", user_id);
 	}
 
+	@Override
+	public void updateUserStatus(String user_id) {
+		sql.update(namespace + ".updateUserStatus", user_id);
+	}
+
 }

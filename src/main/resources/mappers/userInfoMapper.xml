@@ -6,35 +6,41 @@
 <mapper namespace="com.kimreporter.mapper.UserInfoMapper">
 
 <insert id="register">
-INSERT INTO tbl_user_info(user_email, user_pwd, user_name, user_id)
-VALUES(#{user_email}, #{user_pwd}, #{user_name}, #{user_id})
+	INSERT INTO tbl_user_info(user_email, user_pwd, user_name, user_id)
+	VALUES(#{user_email}, #{user_pwd}, #{user_name}, #{user_id})
 </insert>
 
 <select id="login" resultType="UserInfoVO">
-SELECT * from tbl_user_info WHERE user_id = #{user_id}
+	SELECT * from tbl_user_info WHERE user_id = #{user_id}
 </select>
 
 <select id="selectData" resultType="UserInfoVO">
-SELECT * from tbl_user_info WHERE user_id = #{user_id}
+	SELECT * from tbl_user_info WHERE user_id = #{user_id}
 </select>
 
 <update id="updateUser">
-UPDATE tbl_user_info 
-SET user_pwd = #{user_pwd}
-WHERE user_id = #{user_id}
+	UPDATE tbl_user_info 
+	SET user_pwd = #{user_pwd}
+	WHERE user_id = #{user_id}
+</update>
+
+<update id="updateUserStatus">
+	UPDATE tbl_user_info 
+	SET is_active = 1
+	WHERE user_id = #{user_id}
 </update>
 
 <select id="selectListCount" resultType="int">
-SELECT COUNT(*) AS TOTCNT
-FROM tbl_user_info LEFT JOIN TBL_ADAPTATION
-ON tbl_user_info.user_id = TBL_ADAPTATION.user_id
-WHERE TBL_ADAPTATION.user_id = #{user_id}; 
+	SELECT COUNT(*) AS TOTCNT
+	FROM tbl_user_info LEFT JOIN TBL_ADAPTATION
+	ON tbl_user_info.user_id = TBL_ADAPTATION.user_id
+	WHERE TBL_ADAPTATION.user_id = #{user_id}; 
 </select>
 
 <select id="selectMyAdaptations" resultType="com.kimreporter.domain.AdaptationVO">
-SELECT * FROM kimreporter.TBL_ADAPTATION
-LEFT JOIN tbl_user_info ON TBL_ADAPTATION.user_id = tbl_user_info.user_id
-WHERE TBL_ADAPTATION.user_id = #{user_id};
+	SELECT * FROM kimreporter.TBL_ADAPTATION
+	LEFT JOIN tbl_user_info ON TBL_ADAPTATION.user_id = tbl_user_info.user_id
+	WHERE TBL_ADAPTATION.user_id = #{user_id};
 </select>
 
 </mapper>

@@ -8,14 +8,16 @@ public class UserInfoVO implements Serializable {
 	private String user_pwd;
 	private String user_name;
 	private String user_id;
+	private int is_active;
 	
 	public UserInfoVO() throws Exception{
 	}
-	public UserInfoVO(String user_email, String user_pwd, String user_name, String user_id) {
+	public UserInfoVO(String user_email, String user_pwd, String user_name, String user_id, int is_active) {
 		this.user_email = user_email;
 		this.user_pwd = user_pwd;
 		this.user_name = user_name;
 		this.user_id = user_id;
+		this.is_active = is_active;
 	}
 	public String getUser_email() {
 		return user_email;
@@ -41,7 +43,12 @@ public class UserInfoVO implements Serializable {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	
+	public int getIs_active() {
+		return is_active;
+	}
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
+	}
 	@Override
 	public String toString() {
 		return "UserInfoVO [user_email=" + user_email + ", user_pwd=" + user_pwd + ", user_name=" + user_name

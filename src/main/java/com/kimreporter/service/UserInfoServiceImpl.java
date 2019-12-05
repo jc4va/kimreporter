@@ -47,6 +47,11 @@ public class UserInfoServiceImpl implements UserInfoService{
 	public void updateUser(UserInfoVO vo) throws Exception {
 		dao.updateUser(vo);
 	}
+	
+	@Override
+	public void updateUserStatus(String user_id) throws Exception {
+		dao.updateUserStatus(user_id);
+	}
 
 	@Override
 	public UserInfoVO selectData(String user_id) throws Exception {

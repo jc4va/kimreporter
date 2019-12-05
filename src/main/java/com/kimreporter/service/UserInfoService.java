@@ -22,6 +22,8 @@ public interface UserInfoService {
 	
 	public void updateUser(UserInfoVO vo) throws Exception;
 	
+	public void updateUserStatus(String user_id) throws Exception;
+	
 	public UserInfoVO selectData(String user_id) throws Exception;
 
 }
