@@ -14,7 +14,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" type="image/png" 
 	href="${pageContext.request.contextPath}/resources/images/favicon.png">
-<link rel="apple-touch-icon image_src" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon.png">
 <link
 	href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,,500,600,700"
 	rel="stylesheet">
