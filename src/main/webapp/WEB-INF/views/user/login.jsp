@@ -102,6 +102,9 @@
 							<input type="password" name="user_pwd" class="form-control"
 								placeholder="비밀번호">
 						</div>
+						<c:if test="${LR eq 'LOGINFAIL'}">
+							<p style="color:red;">아이디와 비밀번호를 확인해 주십시오</p>
+						</c:if>
 						<div class="form-group" style="text-align: center;">
 							<input type="submit" value="로그인"
 								class="btn btn-primary py-3 px-5">

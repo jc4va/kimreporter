@@ -110,6 +110,7 @@ public class AdaptationServiceImpl implements AdaptationService{
 
 	@Override
 	public void delete() throws Exception {
+		// 일주일 지난 기사 다 삭제
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -7);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");

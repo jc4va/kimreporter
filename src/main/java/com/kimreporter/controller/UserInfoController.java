@@ -91,36 +91,42 @@ public class UserInfoController {
 	@RequestMapping(value = "/approve_user", method = RequestMethod.PUT)
 	public ResponseEntity<String> approveUser(@RequestParam String user_id) throws Exception {
 		logger.info("APPROVING");
-		service.updateUserStatus(user_id);
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-
 		ResponseEntity<String> response = new ResponseEntity<String>("OK", HttpStatus.OK);
+		if (service.selectData(user_id).getIs_active() != 1) {
+			service.updateUserStatus(user_id);
+			
+			Properties props = new Properties();
+			Session session = Session.getDefaultInstance(props, null);
 
-		try {
-			
-			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("admin@hwadu-kimreporter.appspotmail.com", "친절한 김기자"));
-			msg.addRecipient(Message.RecipientType.TO,
-					new InternetAddress(service.selectData(user_id).getUser_email(), "사용자"));
-			msg.setSubject("[친절한 김기자] 가입이 승인되었습니다.");
-			msg.setText(service.selectData(user_id).getUser_name() + "님의 가입이 승인되셨습니다. ");
-			Transport.send(msg);
-			
-		} catch (AddressException e) {
-			response = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (MessagingException e) {
-			response = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (UnsupportedEncodingException e) {
-			response = new ResponseEntity<String>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+			try {
+				Message msg = new MimeMessage(session);
+				msg.setFrom(new InternetAddress("admin@hwadu-kimreporter.appspotmail.com", "친절한 김기자"));
+				msg.addRecipient(Message.RecipientType.TO,
+						new InternetAddress(service.selectData(user_id).getUser_email(), "사용자"));
+				msg.setSubject("[친절한 김기자] 가입이 승인되었습니다.");
+				msg.setText(service.selectData(user_id).getUser_name() + "님의 가입이 승인되셨습니다. ");
+				Transport.send(msg);
+				
+			} catch (AddressException e) {
+				response = new ResponseEntity<String>("ADDRESS ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (MessagingException e) {
+				response = new ResponseEntity<String>("MESSAGING ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (UnsupportedEncodingException e) {
+				response = new ResponseEntity<String>("UNSUPPORTED ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
 		}
-
+		else {
+			response = new ResponseEntity<String>("ALREADY APPROVED", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return response;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void loginGET(@ModelAttribute("dto") LoginDTO dto) throws Exception {
-	}
+	public void loginGET(@ModelAttribute("dto") LoginDTO dto, @ModelAttribute("LR") String login_result, Model model) throws Exception {
+		logger.info(login_result);
+		model.addAttribute("LR", login_result);
+	}	
 
 	@RequestMapping(value = "/myadaptation", method = RequestMethod.GET)
 	public String myAdaptationGET(HttpSession session, Model model) throws Exception {
@@ -165,12 +171,15 @@ public class UserInfoController {
 	}
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-	public void loginPOST(LoginDTO dto, HttpServletResponse response, HttpSession session, Model model)
+	public String loginPOST(LoginDTO dto, HttpServletResponse response, HttpSession session, 
+			final RedirectAttributes rttr, Model model)
 			throws Exception {
 		logger.info("LOGIN POST");
 		String LOGIN = "login";
 
 		UserInfoVO vo = new UserInfoVO();
+		
+		model.addAttribute("User", vo);
 
 		try {
 			vo = service.login(dto);
@@ -178,25 +187,27 @@ public class UserInfoController {
 
 			if (vo != null && passMatch && vo.getIs_active() == 1) {
 				logger.info("LOGIN SUCCESS");
+				rttr.addFlashAttribute("LR", "LOGINSUCCESS");
 				session.setAttribute(LOGIN, vo);
-				response.sendRedirect("/");
+				return "redirect:/";
 			}
 
 			else if (vo != null && passMatch && vo.getIs_active() == 0) {
 				logger.info("NOT YET APPROVED");
-				response.sendRedirect("/user/login_joining");
+				rttr.addFlashAttribute("LR", "LOGINSUCCESS");
+				return "redirect:/user/login_joining";
 			}
 
 			else {
 				logger.info("LOGIN - WRONG PASSWORD");
-				response.sendRedirect("/user/login");
+				rttr.addFlashAttribute("LR", "LOGINFAIL");
+				return "redirect:/user/login";
 			}
 		} catch (NullPointerException e) {
 			logger.info("LOGIN - WRONG PASSWORD");
-			response.sendRedirect("/user/login");
+			rttr.addFlashAttribute("LR", "LOGINFAIL");
+			return "redirect:/user/login";
 		}
-
-		model.addAttribute("User", vo);
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
