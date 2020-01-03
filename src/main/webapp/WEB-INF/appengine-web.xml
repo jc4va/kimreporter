@@ -9,5 +9,9 @@
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
+  
+  <env-variables>
+  	<env-var name="SENDGRID_API_KEY" value="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" />
+  </env-variables>
 
 </appengine-web-app>

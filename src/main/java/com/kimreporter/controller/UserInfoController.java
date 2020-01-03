@@ -1,5 +1,6 @@
 package com.kimreporter.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -38,6 +39,13 @@ import com.kimreporter.domain.LoginDTO;
 import com.kimreporter.domain.UserInfoVO;
 import com.kimreporter.service.UserInfoService;
 import com.kimreporter.utils.PassCrypto;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 
 @Controller
 @RequestMapping("/user")
@@ -56,77 +64,77 @@ public class UserInfoController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String RegisterPOST(UserInfoVO vo, RedirectAttributes rttr) throws Exception {
 		logger.info("post register");
-		
+
 		String encText = PassCrypto.encode(vo.getUser_pwd());
 		vo.setUser_pwd(encText);
 		service.register(vo);
 		rttr.addFlashAttribute("msg", "REGISTERED");
 		
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-		
-		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress("admin@hwadu-kimreporter.appspotmail.com", "친절한 김기자"));
-		msg.addRecipient(Message.RecipientType.TO,
-				new InternetAddress("redhd0410@gmail.com", "친절한 김기자"));
-		msg.setSubject("[친절한 김기자] 신규 가입신청");
-		msg.setText("이메일: " + vo.getUser_email() + "\n" + "아이디: " + vo.getUser_id());
-		Transport.send(msg);
+		Email from = new Email("admin@hwadu-kimreporter.appspotmail.com");
+		String subject = "[친절한 김기자] 신규 가입신청";
+		Email to = new Email("redhd0410@gmail.com");
+		Content content = new Content("text/plain",
+				"이메일: " + vo.getUser_email() + "\n" + "아이디: " + vo.getUser_id());
+		Mail mail = new Mail(from, subject, to, content);
+
+		SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+		Request request = new Request();
+		request.setMethod(Method.POST);
+		request.setEndpoint("mail/send");
+		request.setBody(mail.build());
+		Response response = sg.api(request);
 
 		return "redirect:/user/register_joining";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/check_id", method = RequestMethod.POST)
-	public int checkID(HttpServletRequest request) throws Exception{
+	public int checkID(HttpServletRequest request) throws Exception {
 		String user_id = request.getParameter("user_id");
 		int count = service.selectListCountID(user_id);
-		
+
 		logger.info(user_id);
 		logger.info(String.valueOf(count));
-		
+
 		return count;
 	}
 
 	@RequestMapping(value = "/approve_user", method = RequestMethod.PUT)
 	public ResponseEntity<String> approveUser(@RequestParam String user_id) throws Exception {
+		
 		logger.info("APPROVING");
 		ResponseEntity<String> response = new ResponseEntity<String>("OK", HttpStatus.OK);
+		
 		if (service.selectData(user_id).getIs_active() != 1) {
 			service.updateUserStatus(user_id);
+
+			Email from = new Email("admin@hwadu-kimreporter.appspotmail.com");
+			String subject = "[친절한 김기자] 가입이 승인되었습니다.";
+			Email to = new Email(service.selectData(user_id).getUser_email());
+			Content content = new Content("text/plain",
+					service.selectData(user_id).getUser_name() + "님의 가입이 승인되셨습니다. ");
+			Mail mail = new Mail(from, subject, to, content);
+
+			SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+			Request request = new Request();
+			request.setMethod(Method.POST);
+			request.setEndpoint("mail/send");
+			request.setBody(mail.build());
+			Response r = sg.api(request);
 			
-			Properties props = new Properties();
-			Session session = Session.getDefaultInstance(props, null);
-
-			try {
-				Message msg = new MimeMessage(session);
-				msg.setFrom(new InternetAddress("admin@hwadu-kimreporter.appspotmail.com", "친절한 김기자"));
-				msg.addRecipient(Message.RecipientType.TO,
-						new InternetAddress(service.selectData(user_id).getUser_email(), "사용자"));
-				msg.setSubject("[친절한 김기자] 가입이 승인되었습니다.");
-				msg.setText(service.selectData(user_id).getUser_name() + "님의 가입이 승인되셨습니다. ");
-				Transport.send(msg);
-				
-			} catch (AddressException e) {
-				response = new ResponseEntity<String>("ADDRESS ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-			} catch (MessagingException e) {
-				response = new ResponseEntity<String>("MESSAGING ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-			} catch (UnsupportedEncodingException e) {
-				response = new ResponseEntity<String>("UNSUPPORTED ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-
-		}
-		else {
+		} else {
 			response = new ResponseEntity<String>("ALREADY APPROVED", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
 		return response;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void loginGET(@ModelAttribute("dto") LoginDTO dto, @ModelAttribute("LR") String login_result, Model model) throws Exception {
+	public void loginGET(@ModelAttribute("dto") LoginDTO dto, @ModelAttribute("LR") String login_result, Model model)
+			throws Exception {
 		logger.info(login_result);
 		model.addAttribute("LR", login_result);
-	}	
+	}
 
 	@RequestMapping(value = "/myadaptation", method = RequestMethod.GET)
 	public String myAdaptationGET(HttpSession session, Model model) throws Exception {
@@ -171,14 +179,13 @@ public class UserInfoController {
 	}
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-	public String loginPOST(LoginDTO dto, HttpServletResponse response, HttpSession session, 
-			final RedirectAttributes rttr, Model model)
-			throws Exception {
+	public String loginPOST(LoginDTO dto, HttpServletResponse response, HttpSession session,
+			final RedirectAttributes rttr, Model model) throws Exception {
 		logger.info("LOGIN POST");
 		String LOGIN = "login";
 
 		UserInfoVO vo = new UserInfoVO();
-		
+
 		model.addAttribute("User", vo);
 
 		try {
